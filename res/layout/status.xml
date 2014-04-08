@@ -16,7 +16,7 @@
         style="@style/title_style"/>
 
     <Button
-        android:id="@+id/button_update"
+        android:onClick="onClick"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@android:drawable/btn_default"
