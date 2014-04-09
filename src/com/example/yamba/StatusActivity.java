@@ -1,6 +1,5 @@
 package com.example.yamba;
 
-import winterwell.jtwitter.Twitter;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,10 +21,6 @@ public class StatusActivity extends Activity {
 
 	public void onClick(View v) {
 		String statusText = editStatus.getText().toString();
-		
-		Twitter twitter = new Twitter("student","password") ;
-		twitter.setAPIRootUrl("http://yamba.marakana.com/api") ;
-		twitter.setStatus(statusText);
 		
 		Log.d("StatusActivity", "onClicked!:" + statusText) ;
 	}
