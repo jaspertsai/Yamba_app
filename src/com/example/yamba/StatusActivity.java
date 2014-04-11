@@ -5,6 +5,7 @@ import winterwell.jtwitter.TwitterException;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Debug;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -19,6 +20,7 @@ public class StatusActivity extends Activity {
 	protected void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		
+//		Debug.startMethodTracing("Yamba.trace");
 		Log.d(TAG, "onCreated with Bundle: " + bundle) ;
 		
 		setContentView(R.layout.status);
@@ -26,6 +28,15 @@ public class StatusActivity extends Activity {
 		editStatus = (EditText) findViewById(R.id.edit_status) ;
 		
 	}
+	
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		
+//		Debug.stopMethodTracing();
+	}
+
 
 	public void onClick(View v) {
 		final String statusText = editStatus.getText().toString();
