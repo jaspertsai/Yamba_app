@@ -3,10 +3,12 @@ package com.example.yamba;
 import winterwell.jtwitter.Twitter;
 import winterwell.jtwitter.TwitterException;
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class StatusActivity extends Activity {
 	static final String TAG = "StatusActivity";
@@ -28,18 +30,39 @@ public class StatusActivity extends Activity {
 	public void onClick(View v) {
 		final String statusText = editStatus.getText().toString();
 		
-		new Thread() {
-			public void run() {
-				try {
-					Twitter twitter = new Twitter("student", "password");
-					twitter.setAPIRootUrl("http://yamba.marakana.com/api");
-					twitter.setStatus(statusText);
-				} catch (TwitterException e) {
-					Log.e(TAG,"Died", e);
-					e.printStackTrace();
-				}
-			}
-		}.start();
+		new PostToTwitter().execute(statusText);
+		
 		Log.d(TAG, "onClicked!:" + statusText) ;
 	}
+	
+	class PostToTwitter extends AsyncTask<String, Void, String> {
+
+		/*New thread*/
+		@Override
+		protected String doInBackground(String... params) {
+			try {
+				Twitter twitter = new Twitter("student", "password");
+				twitter.setAPIRootUrl("http://yamba.marakana.com/api");
+				twitter.setStatus(params[0]);
+				Log.d(TAG, "Sucessfully posted: "+params[0]);
+				return "Sucessfully posted: " +params[0];
+			} catch (TwitterException e) {
+				Log.e(TAG,"Died", e);
+				e.printStackTrace();
+				return "Failed posting: " +params[0];
+
+			}
+		}
+		
+		/*UI Thread*/
+		@Override
+		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
+			Toast.makeText(StatusActivity.this, 
+					"Sucessfully posted: " +result, 
+					Toast.LENGTH_LONG).show();
+		}
+		
+	}
+	
 }
