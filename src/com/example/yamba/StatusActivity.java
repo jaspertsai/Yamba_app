@@ -3,15 +3,18 @@ package com.example.yamba;
 import winterwell.jtwitter.Twitter;
 import winterwell.jtwitter.TwitterException;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Debug;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 public class StatusActivity extends Activity {
+	
 	static final String TAG = "StatusActivity";
 	EditText editStatus;
 	
@@ -75,5 +78,28 @@ public class StatusActivity extends Activity {
 		}
 		
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu, menu);
+		return true;
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intent = new Intent(this, UpdaterService.class);
+		
+		switch(item.getItemId()) {
+		case R.id.item_start_service:
+			startService(intent);
+			return true;
+		case R.id.item_stop_service:
+			stopService(intent);
+			return true;
+		default:
+			return false;	
+		}
+	}
+	
+
 	
 }
