@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Debug;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,7 +24,7 @@ public class StatusActivity extends Activity {
 	protected void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		
-//		Debug.startMethodTracing("Yamba.trace");
+		Debug.startMethodTracing("Yamba.trace");
 		Log.d(TAG, "onCreated with Bundle: " + bundle) ;
 		
 		setContentView(R.layout.status);
@@ -37,7 +38,7 @@ public class StatusActivity extends Activity {
 	protected void onStop() {
 		super.onStop();
 		
-//		Debug.stopMethodTracing();
+		Debug.stopMethodTracing();
 	}
 
 
@@ -86,14 +87,18 @@ public class StatusActivity extends Activity {
 	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		Intent intent = new Intent(this, UpdaterService.class);
-		
+		Intent intentUpdater = new Intent(this, UpdaterService.class);
+		Intent intentRefresh = new Intent(this, RefreshService.class);
+
 		switch(item.getItemId()) {
 		case R.id.item_start_service:
-			startService(intent);
+			startService(intentUpdater);
 			return true;
 		case R.id.item_stop_service:
-			stopService(intent);
+			stopService(intentUpdater);
+			return true;
+		case R.id.item_refresh:
+			startService(intentRefresh);
 			return true;
 		default:
 			return false;	

@@ -14,7 +14,7 @@ public class UpdaterService extends Service {
 	static final String TAG = "UpdaterService";
 	static final int DELAY = 30; //in seconds
 	Twitter twitter;
-	
+	boolean running = false;
 	
 	@Override
 	public void onCreate() {
@@ -25,10 +25,11 @@ public class UpdaterService extends Service {
 	}
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
+		running = true;
 		new Thread() {
 			public void run() {
 				try {
-					while(true) {
+					while(running) {
 					List<Status> timeline = twitter.getPublicTimeline();
 
 					for (Status status : timeline) {
@@ -52,6 +53,7 @@ public class UpdaterService extends Service {
 	@Override
 	public void onDestroy() { 
 		super.onDestroy();
+		running = false;
 		Log.d(TAG, "onDestroyed");
 	}
 
