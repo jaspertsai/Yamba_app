@@ -2,7 +2,6 @@ package com.example.yamba;
 
 import java.util.List;
 
-import winterwell.jtwitter.Twitter;
 import winterwell.jtwitter.Twitter.Status;
 import winterwell.jtwitter.TwitterException;
 import android.app.IntentService;
@@ -11,7 +10,6 @@ import android.util.Log;
 
 public class RefreshService extends IntentService {
 	static final String TAG = "RefreshService" ;
-	Twitter twitter;
 	
 	public RefreshService() {
 		super(TAG);
@@ -20,19 +18,20 @@ public class RefreshService extends IntentService {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		twitter = new Twitter("stdent", "password");
-		twitter.setAPIRootUrl("http://yamba.marakana.com/api");
+		
 		Log.d(TAG,"onCreate");
 	}
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		try {
-			List<Status> timeline = twitter.getPublicTimeline();
+			List<Status> timeline = 
+					((YambaApp) getApplication()).getTwitter()
+					.getPublicTimeline();
 
 			for (Status status : timeline) {
-				Log.d(TAG, String.format("%s:%s", 
-						status.user.name,status.text));
+				Log.d(TAG, 
+						String.format("%s:%s", status.user.name,status.text));
 			}
 		} catch (TwitterException e) {
 			Log.e(TAG, "Failed to access twitter service", e);
