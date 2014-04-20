@@ -16,6 +16,7 @@ public class YambaApp  extends Application implements OnSharedPreferenceChangeLi
 	public void onCreate() {
 		super.onCreate();
 		
+		
 		//Prefs stuff
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		prefs.registerOnSharedPreferenceChangeListener(this);
@@ -26,6 +27,7 @@ public class YambaApp  extends Application implements OnSharedPreferenceChangeLi
 	public Twitter getTwitter() {
 		if(twitter==null) {
 			//Twitter stuff
+			prefs = PreferenceManager.getDefaultSharedPreferences(this);
 			String username = prefs.getString("username", "");
 			String password = prefs.getString("password", "");
 			String server = prefs.getString("server", "");
@@ -37,8 +39,10 @@ public class YambaApp  extends Application implements OnSharedPreferenceChangeLi
 	}
 
 	@Override
-	public void onSharedPreferenceChanged(SharedPreferences arg0, String key) {
+	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
 		twitter=null;
+		this.prefs = prefs;
+		
 		Log.d(TAG, "onSharedPreferenceChanged for key: "  +key);
 		
 	}
