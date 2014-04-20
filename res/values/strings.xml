@@ -18,5 +18,19 @@
     <string name="preferences">Preferences</string>
     <string name="delay_summary">How frequently to check for updates</string>
     <string name="dalay">Delay</string>
+    <string-array name="delayNames">
+        <item >Every minute</item>
+        <item >Every five minutes</item>
+        <item >Every half hour</item>
+        <item >Every hour</item>
+    </string-array>
 
+    <string-array name="delayValues">
+        <item >60</item>
+        <item >300</item>
+        <item >1800</item>
+        <item >3600</item>
+    </string-array>
+    
+    
 </resources>

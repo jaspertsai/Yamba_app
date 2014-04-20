@@ -3,7 +3,7 @@
     <EditTextPreference android:summary="@string/username_summary" android:title="@string/username" android:key="@string/username"/>
     <EditTextPreference android:summary="@string/password_summary" android:title="@string/password" android:key="password" android:password="true"/>
     <EditTextPreference android:title="@string/server" android:key="server"/>
-    <EditTextPreference android:title="@string/dalay" android:summary="@string/delay_summary" android:key="delay" android:inputType="number"/>
+    <ListPreference android:title="@string/dalay" android:summary="@string/delay_summary" android:key="delay" android:entries="@array/delayNames" android:entryValues="@array/delayValues"/>
     
 
 </PreferenceScreen>
