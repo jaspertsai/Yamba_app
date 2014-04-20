@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <EditTextPreference android:summary="@string/username_summary" android:title="@string/username" android:key="@string/username"/>
+    <EditTextPreference android:summary="@string/password_summary" android:title="@string/password" android:key="password" android:password="true"/>
+    <EditTextPreference android:title="@string/server" android:key="server"/>
+    <EditTextPreference android:title="@string/dalay" android:summary="@string/delay_summary" android:key="delay" android:inputType="number"/>
+    
+
+</PreferenceScreen>

@@ -25,6 +25,7 @@ public class StatusActivity extends Activity {
 		super.onCreate(bundle);
 		
 		Debug.startMethodTracing("Yamba.trace");
+		
 		Log.d(TAG, "onCreated with Bundle: " + bundle) ;
 		
 		setContentView(R.layout.status);
@@ -47,7 +48,7 @@ public class StatusActivity extends Activity {
 		
 		new PostToTwitter().execute(statusText);
 		
-		Log.d(TAG, "onClicked!:" + statusText) ;
+		Log.d(TAG, "onClicked! with text:" + statusText) ;
 	}
 	
 	class PostToTwitter extends AsyncTask<String, Void, String> {
@@ -56,9 +57,7 @@ public class StatusActivity extends Activity {
 		@Override
 		protected String doInBackground(String... params) {
 			try {
-				Twitter twitter = new Twitter("student", "password");
-				twitter.setAPIRootUrl("http://yamba.marakana.com/api");
-				twitter.setStatus(params[0]);
+				((YambaApp)getApplication()).getTwitter().setStatus(params[0]);
 				Log.d(TAG, "Sucessfully posted: "+params[0]);
 				return "Sucessfully posted: " +params[0];
 			} catch (TwitterException e) {
@@ -99,6 +98,9 @@ public class StatusActivity extends Activity {
 			return true;
 		case R.id.item_refresh:
 			startService(intentRefresh);
+			return true;
+		case R.id.item_prefs:
+			startActivity( new Intent(this, PrefsActivity.class));
 			return true;
 		default:
 			return false;	

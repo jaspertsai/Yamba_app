@@ -2,7 +2,6 @@ package com.example.yamba;
 
 import java.util.List;
 
-import winterwell.jtwitter.Twitter;
 import winterwell.jtwitter.Twitter.Status;
 import winterwell.jtwitter.TwitterException;
 import android.app.Service;
@@ -13,30 +12,32 @@ import android.util.Log;
 public class UpdaterService extends Service {
 	static final String TAG = "UpdaterService";
 	static final int DELAY = 30; //in seconds
-	Twitter twitter;
 	boolean running = false;
 	
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		twitter = new Twitter("stdent", "password");
-		twitter.setAPIRootUrl("http://yamba.marakana.com/api");
 		Log.d(TAG,"onCreate");
 	}
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		running = true;
+		
 		new Thread() {
 			public void run() {
 				try {
 					while(running) {
-					List<Status> timeline = twitter.getPublicTimeline();
+					List<Status> timeline = ((YambaApp) getApplication())
+							.getTwitter().getPublicTimeline();
 
 					for (Status status : timeline) {
-						Log.d(TAG, String.format("%s:%s", status.user.name,
-								status.text));
+						Log.d(TAG, String.format("%s:%s",
+								status.user.name,status.text));
 					}
-					Thread.sleep(DELAY*1000);
+					 int delay = Integer
+							 .parseInt(((YambaApp) getApplication()).prefs
+							 .getString("delay", "30"));
+					Thread.sleep(delay*1000);
 					}
 				} catch (TwitterException e) {
 					Log.e(TAG, "Failed because of network error");

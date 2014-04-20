@@ -10,5 +10,13 @@
     <string name="start_service">Start Service</string>
     <string name="stop_service">Stop Service</string>
     <string name="refresh">Refresh</string>
+    <string name="username">Username</string>
+    <string name="username_summary">Enter your login username</string>
+    <string name="password">Password</string>
+    <string name="password_summary">Enter you login password</string>
+    <string name="server">Enter your Server API Root</string>
+    <string name="preferences">Preferences</string>
+    <string name="delay_summary">How frequently to check for updates</string>
+    <string name="dalay">Delay</string>
 
 </resources>
