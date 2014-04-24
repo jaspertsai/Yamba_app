@@ -14,7 +14,7 @@ import android.util.Log;
 public class StatusData {
 	static final String TAG = "StatusData";
 	public static final String DB_NAME = "timelone.db";
-	public static final int DB_VERSION = 3;
+	public static final int DB_VERSION = 2;
 	public static final String TABLE = "status";
 	public static final String C_ID = BaseColumns._ID;
 	public static final String C_CREATED_AT = "created_at";
@@ -32,7 +32,6 @@ public class StatusData {
 	
 	public void insert(Status status) {
 		
-		
 		ContentValues values = new ContentValues();
 		values.put(C_ID, status.id);
 		values.put(C_CREATED_AT, status.createdAt.getTime());
@@ -40,12 +39,13 @@ public class StatusData {
 		values.put(C_TEXT, status.text);
 		
 		db = dbHelper.getWritableDatabase();
-		db.insertWithOnConflict(TABLE,null,values, SQLiteDatabase.CONFLICT_IGNORE);
+		db.insertWithOnConflict(TABLE,null,values, 
+				SQLiteDatabase.CONFLICT_IGNORE);
 	}
 	
 	public Cursor query() {
 		db = dbHelper.getReadableDatabase();
-		Cursor cursor = db.query(TABLE, null, null, null, null, null, null, 
+		Cursor cursor = db.query(TABLE, null, null, null, null, null, 
 				C_CREATED_AT + " DESC"); 
 			return cursor;
 		}
