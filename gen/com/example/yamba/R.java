@@ -33,15 +33,18 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f0b0005;
+        public static final int action_settings=0x7f0b0007;
         public static final int edit_status=0x7f0b0000;
-        public static final int item_prefs=0x7f0b0004;
-        public static final int item_refresh=0x7f0b0003;
-        public static final int item_start_service=0x7f0b0001;
-        public static final int item_stop_service=0x7f0b0002;
+        public static final int item_prefs=0x7f0b0005;
+        public static final int item_refresh=0x7f0b0004;
+        public static final int item_start_service=0x7f0b0002;
+        public static final int item_stop_service=0x7f0b0003;
+        public static final int item_timeline=0x7f0b0006;
+        public static final int textView2=0x7f0b0001;
     }
     public static final class layout {
         public static final int status=0x7f030000;
+        public static final int timeline=0x7f030001;
     }
     public static final class menu {
         public static final int menu=0x7f0a0000;
@@ -63,6 +66,7 @@ public final class R {
         public static final int start_service=0x7f080006;
         public static final int status_update=0x7f080003;
         public static final int stop_service=0x7f080007;
+        public static final int timeline=0x7f080011;
         public static final int username=0x7f080009;
         public static final int username_summary=0x7f08000a;
     }
