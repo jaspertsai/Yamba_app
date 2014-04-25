@@ -40,7 +40,7 @@ public final class R {
         public static final int item_start_service=0x7f0b0002;
         public static final int item_stop_service=0x7f0b0003;
         public static final int item_timeline=0x7f0b0006;
-        public static final int text_out=0x7f0b0001;
+        public static final int list=0x7f0b0001;
     }
     public static final class layout {
         public static final int status=0x7f030000;

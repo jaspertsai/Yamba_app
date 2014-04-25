@@ -3,21 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-    android:background="@color/my_orange" >
+    android:background="@color/my_blue" >
 
     <TextView
         style="@style/title_style"
-        android:text="@string/timeline" />
-
-    <ScrollView 
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    
-    <TextView
-        android:id="@+id/text_out"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:text="@string/timeline" 
+        android:textColor="#FFFFFF" />
 	
-    </ScrollView>
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+   
 </LinearLayout>
