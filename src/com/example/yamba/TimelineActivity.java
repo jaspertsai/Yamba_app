@@ -7,8 +7,8 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.widget.ListView;
 
 public class TimelineActivity extends Activity {
-	static final String[] FROM = { StatusData.C_USER, StatusData.C_TEXT};
-	static final int[] TO = { android.R.id.text1, android.R.id.text2};
+	static final String[] FROM = { StatusData.C_USER, StatusData.C_TEXT, StatusData.C_CREATED_AT};
+	static final int[] TO = { R.id.text_user, R.id.text_text, R.id.text_created_at};
 	ListView list;
 	Cursor cursor;
 	SimpleCursorAdapter adapter;
@@ -23,7 +23,7 @@ public class TimelineActivity extends Activity {
 		cursor = ((YambaApp)getApplication()).statusData.query();
 		
 		adapter = new SimpleCursorAdapter(this, 
-				android.R.layout.two_line_list_item, cursor, FROM, TO);
+			R.layout.row, cursor, FROM, TO);
 		
 		list.setAdapter(adapter);
 		  
