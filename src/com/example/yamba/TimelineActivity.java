@@ -1,10 +1,14 @@
 package com.example.yamba;
 
 import android.app.ListActivity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,8 +17,13 @@ import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 
 public class TimelineActivity extends ListActivity {
-	static final String[] FROM = { StatusData.C_USER, StatusData.C_TEXT, StatusData.C_CREATED_AT};
-	static final int[] TO = { R.id.text_user, R.id.text_text, R.id.text_created_at};
+	
+
+	static final String TAG = "";
+	static final String[] FROM = { StatusData.C_USER, StatusData.C_TEXT,
+		StatusData.C_CREATED_AT};
+	static final int[] TO = { R.id.text_user, R.id.text_text,
+		R.id.text_created_at};
 	Cursor cursor;
 	SimpleCursorAdapter adapter;
 	
@@ -30,6 +39,25 @@ public class TimelineActivity extends ListActivity {
 		setTitle(R.string.app_name);
 		setListAdapter(adapter);
 	}
+	
+	TimelineReceiver receiver;
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if(receiver==null) receiver = new TimelineReceiver();
+		registerReceiver(receiver, new IntentFilter(YambaApp.ACTION_NEW_STATUS));
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		unregisterReceiver(receiver);
+	}
+
+
+
+	
+	
 	static final ViewBinder VIEW_BINDER = new ViewBinder() {
 
 		@Override
@@ -68,11 +96,21 @@ public class TimelineActivity extends ListActivity {
 			case R.id.item_prefs:
 				startActivity( new Intent(this, PrefsActivity.class));
 				return true;
-			case R.id.item_timeline:
-				startActivity( new Intent( this, TimelineActivity.class));
+			case R.id.item_status_update:
+				startActivity( new Intent( this, StatusActivity.class));
 				return true;
 			default:
 				return false;	
 			}
 		}
+		
+		class TimelineReceiver extends BroadcastReceiver {
+			@Override
+			public void onReceive(Context content, Intent intent) {
+				cursor = ((YambaApp)getApplication()).statusData.query();
+				adapter.changeCursor(cursor);
+				Log.d(TAG, "TimelineReceiver onReceive changeCursor with count: " 
+						+intent.getIntExtra("count", 0));
+			}
+		}	
 }

@@ -36,11 +36,11 @@ public final class R {
     public static final class id {
         public static final int action_settings=0x7f0b0009;
         public static final int edit_status=0x7f0b0003;
-        public static final int item_prefs=0x7f0b0007;
-        public static final int item_refresh=0x7f0b0006;
-        public static final int item_start_service=0x7f0b0004;
-        public static final int item_stop_service=0x7f0b0005;
-        public static final int item_timeline=0x7f0b0008;
+        public static final int item_prefs=0x7f0b0006;
+        public static final int item_refresh=0x7f0b0005;
+        public static final int item_start_service=0x7f0b0007;
+        public static final int item_status_update=0x7f0b0004;
+        public static final int item_stop_service=0x7f0b0008;
         public static final int text_created_at=0x7f0b0001;
         public static final int text_text=0x7f0b0002;
         public static final int text_user=0x7f0b0000;
