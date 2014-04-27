@@ -1,9 +1,12 @@
 package com.example.yamba;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.format.DateUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
@@ -24,7 +27,7 @@ public class TimelineActivity extends ListActivity {
 			R.layout.row, cursor, FROM, TO);
 		adapter.setViewBinder(VIEW_BINDER);
 		
-		setTitle(R.string.timeline);
+		setTitle(R.string.app_name);
 		setListAdapter(adapter);
 	}
 	static final ViewBinder VIEW_BINDER = new ViewBinder() {
@@ -41,4 +44,35 @@ public class TimelineActivity extends ListActivity {
 		}
 		
 	};
+	//Menu Stuff
+		@Override
+		public boolean onCreateOptionsMenu(Menu menu) {
+			getMenuInflater().inflate(R.menu.menu, menu);
+			return true;
+		}
+		@Override
+		public boolean onOptionsItemSelected(MenuItem item) {
+			Intent intentUpdater = new Intent(this, UpdaterService.class);
+			Intent intentRefresh = new Intent(this, RefreshService.class);
+
+			switch(item.getItemId()) {
+			case R.id.item_start_service:
+				startService(intentUpdater);
+				return true;
+			case R.id.item_stop_service:
+				stopService(intentUpdater);
+				return true;
+			case R.id.item_refresh:
+				startService(intentRefresh);
+				return true;
+			case R.id.item_prefs:
+				startActivity( new Intent(this, PrefsActivity.class));
+				return true;
+			case R.id.item_timeline:
+				startActivity( new Intent( this, TimelineActivity.class));
+				return true;
+			default:
+				return false;	
+			}
+		}
 }
