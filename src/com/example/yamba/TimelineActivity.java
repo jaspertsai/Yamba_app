@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 public class TimelineActivity extends ListActivity {
 	static final String[] FROM = { StatusData.C_USER, StatusData.C_TEXT, StatusData.C_CREATED_AT};
 	static final int[] TO = { R.id.text_user, R.id.text_text, R.id.text_created_at};
-	ListView list;
 	Cursor cursor;
 	SimpleCursorAdapter adapter;
 	
@@ -26,7 +24,8 @@ public class TimelineActivity extends ListActivity {
 			R.layout.row, cursor, FROM, TO);
 		adapter.setViewBinder(VIEW_BINDER);
 		
-		getListView().setAdapter(adapter);
+		setTitle(R.string.timeline);
+		setListAdapter(adapter);
 	}
 	static final ViewBinder VIEW_BINDER = new ViewBinder() {
 
