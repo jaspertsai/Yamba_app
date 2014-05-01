@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     
+    
     <application android:name=".YambaApp"
         android:allowBackup="true"
         android:icon="@drawable/icon"
@@ -35,10 +36,17 @@
         </activity>
         
         <service android:name=".UpdaterService"></service>
-        <service android:name=".RefreshService"></service>
+        
+        <service android:name=".RefreshService"
+            	 android:permission="com.example.yamba.permission.REFRESH">
+            <intent-filter>
+                <action android:name="com.example.yamba.RefreshService"/>
+            </intent-filter>
+        </service>
         
         <receiver android:name=".BootReceiver">
         	<intent-filter>
+        	    <action android:name="com.example.yamba.TEST_BROADCAST"/>
         	    <action android:name="android.intent.action.BOOST_COMPLETED"/>
         	</intent-filter>
         </receiver>
