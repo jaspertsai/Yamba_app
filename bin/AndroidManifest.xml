@@ -44,8 +44,9 @@
             </intent-filter>
         </service>
         
-        <receiver android:name=".BootReceiver">
+        <receiver android:name=".RefreshScheduleReceiver">
         	<intent-filter>
+        	    <action android:name="com.example.yamba.RefreshAlarm"/>
         	    <action android:name="com.example.yamba.TEST_BROADCAST"/>
         	    <action android:name="android.intent.action.BOOST_COMPLETED"/>
         	</intent-filter>
