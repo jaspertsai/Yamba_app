@@ -2,6 +2,10 @@ package com.example.yamba;
 
 import winterwell.jtwitter.TwitterException;
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Debug;
@@ -10,17 +14,21 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class StatusActivity extends Activity {
+public class StatusActivity extends Activity implements LocationListener {
 	
 	static final String TAG = "StatusActivity";
+	static final String PROVIDER = LocationManager.GPS_PROVIDER;
 	EditText editStatus;
+	LocationManager locationManager;
+	Location location;
+
 	
 	/**Called when the activity is first created. */
 	@Override
 	protected void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		
-		Debug.startMethodTracing("Yamba.trace");
+//		Debug.startMethodTracing("Yamba.trace");
 		
 		Log.d(TAG, "onCreated with Bundle: " + bundle) ;
 		
@@ -28,14 +36,28 @@ public class StatusActivity extends Activity {
 		
 		editStatus = (EditText) findViewById(R.id.edit_status) ;
 		
+		locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+		location = locationManager.getLastKnownLocation(PROVIDER);
+		
+	}
+	@Override
+	protected void onResume() {
+		super.onResume();
+		locationManager.requestLocationUpdates(PROVIDER, 30000, 1000, this);
 	}
 	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		locationManager.removeUpdates(this);
+	}
 
+	
 	@Override
 	protected void onStop() {
 		super.onStop();
 		
-		Debug.stopMethodTracing();
+//		Debug.stopMethodTracing();
 	}
 
 
@@ -48,7 +70,19 @@ public class StatusActivity extends Activity {
 	}
 	
 	class PostToTwitter extends AsyncTask<String, Void, String> {
-
+		ProgressDialog dialog;
+		
+		@Override
+		protected void onPreExecute(){
+			super.onPreExecute();
+			dialog = new ProgressDialog(StatusActivity.this);
+			dialog.setMessage("Please wait while loading...");
+			dialog.setIndeterminate(true);
+			dialog.setCancelable(true);
+			dialog.show();
+		}
+		
+		
 		/*New thread*/
 		@Override
 		protected String doInBackground(String... params) {
@@ -72,6 +106,26 @@ public class StatusActivity extends Activity {
 					"Sucessfully posted: " +result, 
 					Toast.LENGTH_LONG).show();
 		}
+		
+	}
+
+	//---LocationListener callbacks
+	
+	@Override
+	public void onLocationChanged(Location l) {
+		location = l;
+		Log.d(TAG, "onLocationChanged: "+location.toString());
+	}
+	@Override
+	public void onProviderDisabled(String provider) {
+		
+	}
+	@Override
+	public void onProviderEnabled(String provider) {
+		
+	}
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
 		
 	}
 	

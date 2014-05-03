@@ -40,9 +40,9 @@ public class YambaApp  extends Application implements OnSharedPreferenceChangeLi
 		if(twitter==null) {
 			//Twitter stuff
 			prefs = PreferenceManager.getDefaultSharedPreferences(this);
-			String username = prefs.getString("username", "");
-			String password = prefs.getString("password", "");
-			String server = prefs.getString("server", "");
+			String username = prefs.getString("username", "student");
+			String password = prefs.getString("password", "password");
+			String server = prefs.getString("server", "http://yamba.marakana.com/api");
 			twitter = new Twitter(username, password);
 			twitter.setAPIRootUrl(server);
 			
