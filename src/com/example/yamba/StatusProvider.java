@@ -69,8 +69,8 @@ public class StatusProvider extends ContentProvider{
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
 		db = dbHelper.getReadableDatabase();
-		Cursor cursor = db.query(TABLE, projection, selection,
-				selectionArgs, null, null, sortOrder); 
+		Cursor cursor = db.query(TABLE, projection, selection,selectionArgs,
+				null, null, sortOrder);
 			return cursor;
 	}
 
