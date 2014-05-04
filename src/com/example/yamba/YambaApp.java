@@ -12,7 +12,8 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-public class YambaApp  extends Application implements OnSharedPreferenceChangeListener {
+public class YambaApp  extends Application implements 
+		OnSharedPreferenceChangeListener {
 	static final String TAG = "YambaApp" ;
 	public static final String ACTION_NEW_STATUS = "com.example.yamba.NEW_STATUS";
 	public static final String ACTION_REFRESH = "com.example.yamba.RefreshService";
@@ -20,7 +21,6 @@ public class YambaApp  extends Application implements OnSharedPreferenceChangeLi
 
 	private Twitter twitter;
 	SharedPreferences prefs;
-	StatusData statusData;
 	
 	@Override
 	public void onCreate() {
@@ -30,8 +30,7 @@ public class YambaApp  extends Application implements OnSharedPreferenceChangeLi
 		//Prefs stuff
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		prefs.registerOnSharedPreferenceChangeListener(this);
-	
-		statusData = new StatusData(this);
+
 		
 		Log.d(TAG,"onCreated");
 	}
@@ -67,7 +66,10 @@ public class YambaApp  extends Application implements OnSharedPreferenceChangeLi
 			List<Status> timeline =getTwitter().getPublicTimeline();
 			
 			for (Status status : timeline) {
-				statusData.insert(status);
+				
+				getContentResolver().insert(StatusProvider.CONTENT_URI,
+						StatusProvider.statusToValues(status));
+				
 	//			if(biggestTimestamp==-1) biggestTimestamp = status.createdAt.getTime();
 				if(status.createdAt.getTime()>this.lastTimestampSeen){
 					count++;
@@ -81,9 +83,11 @@ public class YambaApp  extends Application implements OnSharedPreferenceChangeLi
 		} catch (TwitterException e) {
 			Log.e(TAG, "Failed to pull timeline", e);
 		}
+		
 		if (count>0){
 			sendBroadcast(new Intent(ACTION_NEW_STATUS).putExtra("count", count) );
 		}
+		
 		this.lastTimestampSeen = biggestTimestamp;
 		return count;
 	}

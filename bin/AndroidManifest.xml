@@ -56,6 +56,11 @@
         	    <action android:name="android.intent.action.BOOST_COMPLETED"/>
         	</intent-filter>
         </receiver>
+        
+        <provider 
+            android:authorities="com.example.yamba.provider"
+            android:name=".StatusProvider">   
+        </provider>
     </application>
 
 </manifest>
